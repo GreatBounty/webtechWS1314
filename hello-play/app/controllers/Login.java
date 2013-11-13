@@ -25,7 +25,6 @@ public class Login extends Controller {
 		else{
 			return badRequest("fuck");
 		}
-		//return ok("Email: " + eMail + "Password: " + password);
 	}
 	
 }
