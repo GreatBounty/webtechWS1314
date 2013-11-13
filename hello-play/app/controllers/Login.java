@@ -16,16 +16,16 @@ public class Login extends Controller {
 	
 	public static Result dynamicform(){
 		DynamicForm requestData = Form.form().bindFromRequest();
-		String eMail = requestData.get("eMail");
+		String eMail = requestData.get("email");
 		String password = requestData.get("password");
-		/*
+		
 		if(LoginTest.logintest(eMail, password)){
 			return ok("Email: " + eMail + "Password: " + password);
 		}
 		else{
 			return badRequest("fuck");
-		}*/
-		return ok("Email: " + eMail + "Password: " + password);
+		}
+		
 	}
 	
 }
