@@ -7,6 +7,9 @@ public class MainController extends Controller {
     
     public static Result index() {
         return ok(views.html.index.render("Hello from Java"));
+        //return ok(views.index.scala.html("Hello from Java"));
     }
+   	
+    
     
 }
