@@ -6,9 +6,24 @@ GET     /                           controllers.MainController.index()
 GET     /message                    controllers.MessageController.getMessage()
 GET     /assets/javascripts/routes  controllers.MessageController.javascriptRoutes()
 
+
+# Formulare
+GET		/login						controllers.Login.showLoginForm()
+POST	/login						controllers.Login.dynamicform()
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
 
-#formulare
-POST	/login						controllers.Login.dynamicform()
