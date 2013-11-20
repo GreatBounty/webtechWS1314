@@ -1,0 +1,107 @@
+@(badrequest: String)
+
+
+@main("Welcome to Play Framework") {
+
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
+
+    <div class="container">
+
+    <div class="starter-template">
+      <h1>Registrieren</h1>
+      
+      	<p>@badrequest</p>
+    </div>
+    
+
+    <div class="row">
+
+			<form class="form-horizontal" role="form" method="POST" action="/registrieren">
+			  <div class="form-group">
+			    <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
+			    <div class="col-lg-10">
+			      <input name="email" type="email" class="form-control" id="inputEmail1" placeholder="Email">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="inputPassword1" class="col-lg-2 control-label">Password</label>
+			    <div class="col-lg-10">
+			      <input name="password" type="password" class="form-control" id="inputPassword1" placeholder="Password">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="inputnickname" class="col-lg-2 control-label">Nickname</label>
+			    <div class="col-lg-10">
+			      <input name="nickname" type="text" class="form-control" id="inputnickname">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <div class="col-lg-offset-2 col-lg-10">
+			      <div class="checkbox">
+			        <label>
+			          <input onchange="hide()" name="fahrer" type="checkbox" id="fahrer">Fahrer
+			        </label>
+			      </div>
+			    </div>
+			  </div>
+			  
+			  
+			  
+			  <div class="form-group">
+			  	<label for="datetimepicker" class="col-lg-2 control-label">Geburtstag</label>
+			  	
+			  		<div id="datetimepicker" class="input-append date">
+			  			<input name="datepicker" type="text"></input>
+			  			<span class="add-on">
+		      			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+		      			</span>
+		      		</div>
+		      	
+		      </div>
+		
+		    
+		    
+			  <div class="form-group">
+			    <div class="col-lg-offset-2 col-lg-10">
+			      <button type="submit" class="btn btn-default">Registrate</button>
+			    </div>
+			  </div>
+			</form>
+    </div>
+	
+  </div>
+  
+  
+  
+  
+  
+  <script type="text/javascript"
+   src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+  </script> 
+  <script type="text/javascript"
+   src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+  </script>
+  <script type="text/javascript"
+   src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script type="text/javascript"
+   src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+  </script>
+  
+  <script type="text/javascript">
+    $('#datetimepicker').datetimepicker({
+      format: 'dd-MM-yyyy',
+      language: 'de',
+      pickTime:false
+    });
+  </script>
+  <script type="text/javascript">
+  function hide(){
+	  document.getElementById('datetimepicker').hide();
+  }
+</script>
+  
+}
