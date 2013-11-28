@@ -1,6 +1,6 @@
 package controllers;
 
-import db.UserDB;
+import db.DBUser;
 import models.LoginTest;
 import models.User;
 import models.ValidUser;
@@ -51,11 +51,12 @@ public class Login extends Controller {
 //		    users.create(new User(user.email,user.password));
 //		    return ok("Deine Eingaben: " +user.email +" " +user.password +" remember: " +user.remember);
 //		    UserDB userDB = UserDB.get();
-		    User userDB = UserDB.get().validateUser(user.email, user.password);
+		    User userDB = DBUser.get().validateUser(user.email, user.password);
 		    if(userDB != null){
 		    	session().clear();
 		    	session("email", userDB.email);
-		    	return ok(views.html.index.render("Hello " + session("email")));
+		    	session("connected", "true");
+		    	return ok(views.html.index.render("Hello " + session("email"),userDB));
 		    	//return ok("Deine Eingaben: " +user.email +" " +user.password +" remember: " +user.remember);
 		    }else{
 		    	//return badRequest("falsche Angaben");

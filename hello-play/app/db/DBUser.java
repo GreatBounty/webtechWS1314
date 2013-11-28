@@ -1,17 +1,17 @@
 package db;
 
+import models.MFG;
 import models.User;
 
 import org.mongojack.DBCursor;
 
 import play.Logger;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 
 
-public class UserDB extends Finder<User>{
-	public UserDB(DB db) {
+public class DBUser extends Finder<User>{
+	public DBUser(DB db) {
 		super(db, DBConnect.COLLECTION_USERS, User.class);
 	}
 	/**
@@ -21,7 +21,7 @@ public class UserDB extends Finder<User>{
 	public static final String COLLECTION_THINGS = "things";
 	//private static ThingDB instance = new ThingDB(DBConnect.getDB());
 	
-	private static UserDB instance = new UserDB(DBConnect.getDB());
+	private static DBUser instance = new DBUser(DBConnect.getDB());
 	
 	
 	public static void init() {
@@ -32,9 +32,11 @@ public class UserDB extends Finder<User>{
 		//).ensureIndex(new BasicDBObject("lonLat", "2dsphere"))
 		get().db.getCollection(DBConnect.COLLECTION_USERS);
 	}
-	public static UserDB get(){
+	public static DBUser get(){
 		return instance;
 	}
+	
+	
 	
 //	public static UserDB get(){
 //		if(instance == null){
@@ -49,9 +51,16 @@ public class UserDB extends Finder<User>{
 		}else{
 			return null;
 		}
-		//User.dateCreated = new Date();
-		
 	}
+	public User addMFG(User user, MFG mfg){
+		if(!contains(user)){
+			user.mf_MFG.add(mfg);
+			return save(user);
+		}else{
+			return null;
+		}
+	}
+	
 	/**
 	 * @param skip offset 
 	 * @param maxNum maximum number to return
@@ -70,6 +79,28 @@ public class UserDB extends Finder<User>{
 			}
 		}
 		return false;
+	}
+	
+	public User findByEmail(String email){
+		DBCursor<User> Users = getColl().find();
+		
+		for(User userDB : Users){
+			if(email.equals(userDB.email)){
+				return userDB;
+			}
+		}
+		return null;
+	}
+	
+	public String getIdFromUser(User user){
+		DBCursor<User> Users = getColl().find();
+		
+		for(User userDB : Users){
+			if(user.email.equals(userDB.email)){
+				return userDB._id;
+			}
+		}
+		return null;
 	}
 	
 	public DBCursor<User> list(){

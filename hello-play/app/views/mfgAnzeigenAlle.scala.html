@@ -1,4 +1,5 @@
-@(message: String, user : User)
+@(message: String, user : User, mfg : Iterator[MFG])
+@import tags._
 
 @main("Welcome to Play Framework", user) {
 
@@ -10,7 +11,13 @@
     <div class="userDetails">
     <dt>@user.nickname <span>(@user.email)</span></dt>
     </div>
+    <div class="row"> 
+	<h2>alle Mitfahrgelegenheiten anzeigen</h2>
 
-   
+	<div class="row">
+		@mfgTableWithStatus(mfg)
+	</div>
+		
+</div>
 
 }

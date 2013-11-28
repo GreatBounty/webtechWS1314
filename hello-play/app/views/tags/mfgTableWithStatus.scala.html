@@ -1,0 +1,34 @@
+@(items: Iterator[MFG])
+		<table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Start</th>
+              <th>Ziel</th>
+              <th>Strecke</th>
+              <th>Plätze</th>
+              <th>Wann</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+         <tbody>
+         @for( i <- items ){
+         
+            <tr>     
+				<td>@i.start</td>
+				<td>@i.ziel</td>
+				<td>@i.strecke</td>
+				<td>@i.seats</td>
+				<td>@i.date.format("dd. MMMM yyyy HH:mm")</td>
+				<td>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default"
+						@if(i.seats < 1){disabled}>
+						<a href="/mfgAnzeigenAlle/@i._id">Anfragen</a>
+						</button>
+					</div>
+				</td>
+			</tr>
+         }   
+        
+        </tbody>
+      </table>

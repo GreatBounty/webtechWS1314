@@ -1,6 +1,6 @@
 package controllers;
 
-import db.UserDB;
+import db.DBUser;
 import models.LoginTest;
 import models.User;
 import models.ValidUser;

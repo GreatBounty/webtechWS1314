@@ -3,7 +3,7 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import db.DBConnect;
-import db.UserDB;
+import db.DBUser;
 
 
 public class Global extends GlobalSettings {
@@ -14,9 +14,9 @@ public class Global extends GlobalSettings {
 	@Override
 	public void onStart(Application app) {
 		// ensure db is up and indexes are set
-		UserDB.init();
+		DBUser.init();
 		
-		UserDB users = UserDB.get();
+		DBUser users = DBUser.get();
 
 		
 		Logger.info("User: " + users.count());

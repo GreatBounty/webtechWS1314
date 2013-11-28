@@ -11,9 +11,10 @@ import org.joda.time.DateTime;
 
 import models.User;
 import models.ValidUser;
-import db.UserDB;
+import db.DBUser;
 import play.Logger;
 import play.data.Form;
+import play.data.validation.Validation;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -38,19 +39,27 @@ public class Registrieren extends Controller {
 		} else {
 			User user = form.get();
 
+			if(!user.password.equals(parameters.get("password2")[0])){
+				return badRequest(views.html.registrieren
+						.render("Passwörter stimmen nicht überein"));
+			}
 			// UserDB.init();
 			//
-			UserDB users = UserDB.get();
+			DBUser users = DBUser.get();
 			//TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 			Date date = new Date();
+			Date d = new Date();
 			try {
 				//  30-07-1987
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				sdf.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
 				Logger.info("date from js " + parameters.get("datepicker")[0]);
 				String datefromForm = parameters.get("datepicker")[0];
 				//String datefromForm = "2013-05-04";
 				date = sdf.parse(datefromForm);
-			
+				
+				
+				
 				Logger.info(date.toString());
 			} catch (Exception e) {
 				Logger.info("Fehler beim Date \n"+e);
@@ -63,6 +72,7 @@ public class Registrieren extends Controller {
 			}
 
 			// Date date = sdf.parse(user.date);
+			
 			User newUser = users.create(new User(user.email, user.password,
 					user.nickname, user.fahrer, date));
 

@@ -1,7 +1,6 @@
 @(badrequest: String)
 
-
-@main("Welcome to Play Framework") {
+@main("Welcome to Play Framework", null) {
 
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
 
@@ -32,6 +31,13 @@
 			  </div>
 			  
 			  <div class="form-group">
+			    <label for="inputPassword1" class="col-lg-2 control-label">Password bestätigen</label>
+			    <div class="col-lg-10">
+			      <input name="password2" type="password" class="form-control" id="inputPassword2" placeholder="Password">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
 			    <label for="inputnickname" class="col-lg-2 control-label">Nickname</label>
 			    <div class="col-lg-10">
 			      <input name="nickname" type="text" class="form-control" id="inputnickname">
@@ -42,7 +48,7 @@
 			    <div class="col-lg-offset-2 col-lg-10">
 			      <div class="checkbox">
 			        <label>
-			          <input onchange="hide()" name="fahrer" type="checkbox" id="fahrer">Fahrer
+			          <input onchange="checkChanged()" name="fahrer" type="checkbox" id="fahrer">Fahrer
 			        </label>
 			      </div>
 			    </div>
@@ -50,12 +56,12 @@
 			  
 			  
 			  
-			  <div class="form-group">
+			  <div class="form-group" id="date_from_group" style="display:none;">
 			  	<label for="datetimepicker" class="col-lg-2 control-label">Geburtstag</label>
 			  	
 			  		<div id="datetimepicker" class="input-append date">
-			  			<input name="datepicker" type="text"></input>
-			  			<span class="add-on">
+			  			<input style="height: 30px !important;" name="datepicker" type="text"></input>
+			  			<span style="height: 30px !important;" class="add-on">
 		      			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 		      			</span>
 		      		</div>
@@ -98,9 +104,10 @@
       pickTime:false
     });
   </script>
+  
   <script type="text/javascript">
-  function hide(){
-	  document.getElementById('datetimepicker').hide();
+  function checkChanged(){
+	$("#date_from_group").toggle();
   }
 </script>
   
