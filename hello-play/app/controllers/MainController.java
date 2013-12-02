@@ -1,5 +1,8 @@
 package controllers;
 
+import models.User;
+import db.DBMFG;
+import db.DBMfg_Status;
 import db.DBUser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -14,7 +17,8 @@ public class MainController extends Controller {
 		Logger.info("session: " + session("email"));
 		//Logger.info("findById: " + UserDB.get().findById("528ddd6a119c6788a6c259f1"));
 		Logger.info("aus DB: " +  DBUser.get().findByEmail(session("email")));
-        return ok(views.html.index.render("Hello " + session("email"), DBUser.get().findByEmail(session("email"))));
+		User userDB = DBUser.get().findByEmail(session("email"));
+		return ok(views.html.index.render("Hello " + session("email"), userDB,DBMFG.get().listToDecide(userDB)));
         //return ok(views.index.scala.html("Hello from Java"));
     }
    	

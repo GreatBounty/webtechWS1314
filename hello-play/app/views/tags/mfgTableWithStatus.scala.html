@@ -1,4 +1,4 @@
-@(items: Iterator[MFG])
+@(items: Iterator[MFG], user : User, status : List[Mfg_Status])
 		<table class="table table-striped">
           <thead>
             <tr>
@@ -21,10 +21,34 @@
 				<td>@i.date.format("dd. MMMM yyyy HH:mm")</td>
 				<td>
 					<div class="btn-group">
-						<button type="button" class="btn btn-default"
-						@if(i.seats < 1){disabled}>
-						<a href="/mfgAnzeigenAlle/@i._id">Anfragen</a>
+						<button type="button" class="btn btn-default">
+						@if(i.seats > 0){
+							<a href="/mfgAnzeigenAlle/@i._id">Anfragen</a> 
+						} else {
+							Anfragen
+						}
 						</button>
+						@if(status != null){
+							@if(i.mfg_Status_Id != null){
+								@for(mfg <- i.mfg_Status_Id){
+									@for(st <- status){
+										@if(mfg == st._id){
+											@if(st._mfId == user._id){
+												@if(st.status == "anfrage"){
+													<button class="btn">Anfrage läuft!</button>
+												}
+												@if(st.status == "angenommen"){
+													<button class="btn btn-success"><i class="icon-white icon-thumbs-up"></i>Anfrage wurde angenommen!</button>
+												}
+												@if(st.status == "abgelehnt"){
+													<button class="btn btn-danger"><i class="icon-white icon-thumbs-down"></i>Anfrage wurde abgelehnt</button>
+												} 
+											} 
+										}
+									}
+								}
+							}
+						}
 					</div>
 				</td>
 			</tr>

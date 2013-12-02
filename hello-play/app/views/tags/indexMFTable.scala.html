@@ -1,0 +1,58 @@
+@(items: List[MFG], user : User)
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th>Start</th>
+    <th>Ziel</th>
+    <th>Strecke</th>
+    <th>Plätze</th>
+    <th>Wann</th>
+  </tr>
+</thead>
+<tbody>
+@for( i <- items ){
+	@if(i.mfg_Status_Id != null){
+		 <tr>     
+	  		<td>@i.start</td>
+			<td>@i.ziel</td>
+			<td>@i.strecke</td>
+			<td>@i.seats</td>
+			<td>@i.date.format("dd. MMMM yyyy HH:mm")</td>
+		</tr>
+		<tr>
+			<td>@if(i.mfg_Status_Id != null){
+					@for(mfg <- i.mfg_Status_Id){
+						
+						
+								
+								<tr>
+								<td>Annehmen/Ablehnen: </td>
+								<td/><td/>
+								<td>
+									<div class="row">
+										<a href="/fAccecpt/@mfg" class="btn btn-primary">Annehmen</a>
+									</div>
+								</td>
+								<td>
+									<div class="row">
+										<a href="/fDeny/@mfg" class="btn btn-primary">Ablehnen</a>
+									</div>
+								</td>
+								
+								
+							
+								<tr/>
+							
+						
+					}
+				}
+			}
+			
+			</tr>
+}   
+	
+	 
+
+</tbody>
+</table>
+

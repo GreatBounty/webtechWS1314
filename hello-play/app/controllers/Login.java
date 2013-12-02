@@ -1,9 +1,12 @@
 package controllers;
 
+import db.DBMFG;
+import db.DBMfg_Status;
 import db.DBUser;
 import models.LoginTest;
 import models.User;
 import models.ValidUser;
+import play.Logger;
 import play.api.mvc.Session;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -44,19 +47,14 @@ public class Login extends Controller {
 		} else {
 		    User user = form.get();
 		    
-//		    UserDB.init();
-//			
-//			UserDB users = UserDB.get();
-//			
-//		    users.create(new User(user.email,user.password));
-//		    return ok("Deine Eingaben: " +user.email +" " +user.password +" remember: " +user.remember);
-//		    UserDB userDB = UserDB.get();
+
 		    User userDB = DBUser.get().validateUser(user.email, user.password);
 		    if(userDB != null){
 		    	session().clear();
 		    	session("email", userDB.email);
 		    	session("connected", "true");
-		    	return ok(views.html.index.render("Hello " + session("email"),userDB));
+		    	Logger.info("TEEEEEEEEEEEEEST");
+		    	return ok(views.html.index.render("Hello " + session("email"),userDB, DBMFG.get().listToDecide(userDB)));
 		    	//return ok("Deine Eingaben: " +user.email +" " +user.password +" remember: " +user.remember);
 		    }else{
 		    	//return badRequest("falsche Angaben");

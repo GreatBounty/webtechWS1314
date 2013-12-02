@@ -1,4 +1,4 @@
-@(message: String, user : User, mfg : Iterator[MFG])
+@(message: String, user : User, mfg : Iterator[MFG], status : List[Mfg_Status])
 @import tags._
 
 @main("Welcome to Play Framework", user) {
@@ -15,7 +15,7 @@
 	<h2>alle Mitfahrgelegenheiten anzeigen</h2>
 
 	<div class="row">
-		@mfgTableWithStatus(mfg)
+		@mfgTableWithStatus(mfg, user, status)
 	</div>
 		
 </div>

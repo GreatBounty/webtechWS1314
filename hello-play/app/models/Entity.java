@@ -17,6 +17,8 @@ public abstract class Entity {
 	public String _id;
 	
 	
+	public boolean IsDeleted;
+	
 	@Override
 	public String toString() {
 		return "" +getClass().getSimpleName() +" _id:" +_id;

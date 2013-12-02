@@ -5,10 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import db.Constants;
 import db.DBMFG;
+import db.DBMfg_Status;
 import db.DBUser;
 import play.Logger;
 import play.api.mvc.Session;
@@ -32,14 +35,20 @@ public class Mfg extends Controller {
 
 	@Security.Authenticated(Secured.class)
 	public static Result list() {
+
+//		for(MFG x : DBMFG.get().list()){
+//			x.IsDeleted = false;
+//			DBMFG.get().save(x);
+//		}
 		
 		User userDB = DBUser.get().findByEmail(session("email"));
-		if(userDB.fahrer){
-		return ok(views.html.mfgAnzeigen.render("", userDB,
-				DBMFG.get().list(userDB)));
-		}else{
-			return ok(views.html.mfgAnzeigenAlle.render("", userDB,
-					DBMFG.get().list()));
+		if (userDB.fahrer) {
+			return ok(views.html.mfgAnzeigen.render("", userDB, DBMFG.get()
+					.list(userDB)));
+		} else {
+
+			return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
+					.list(),DBMfg_Status.get().list().toArray()));
 		}
 		// return ok(views.html.index.render("Hello from Java"));
 		// return ok(views.index.scala.html("Hello from Java"));
@@ -88,43 +97,28 @@ public class Mfg extends Controller {
 		} else {
 			MFG mfg = form.get();
 
-			Date date = new Date();
-
-			try {
-
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-				sdf.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
-				Logger.info("date from js " + parameters.get("datepicker")[0]);
-				String datefromForm = parameters.get("datepicker")[0];
-				date = sdf.parse(datefromForm);
-
-				Logger.info(date.toString());
-			} catch (Exception e) {
-				Logger.info("Fehler beim Date \n" + e);
-			}
-
-			if (date == null) {
-				return badRequest(views.html.mfgAnbieten.render(
-						"Date geht noch nicht...oder war leer!", userDB));
-
-			}
+			Date date = parseDateFromDatepicker(true);
 			String FK_idUser = DBUser.get().getIdFromUser(userDB);
 
 			MFG newMFG = null;
-			if (FK_idUser != null) {
+			if (FK_idUser != null && date != null) {
 				newMFG = DBMFG.get().create(
 						new MFG(mfg.start, mfg.ziel, mfg.strecke, mfg.seats,
 								date, FK_idUser));
 			}
 
-			Logger.info("newMFG: " + newMFG.toString());
-
 			if (newMFG != null) {
+				Logger.info("newMFG: " + newMFG.toString());
 				Logger.info("hier sollte man sein !!!");
 				return ok(views.html.mfgAnzeigen.render("", userDB, DBMFG.get()
 						.list(userDB)));
 			} else {
 				// return badRequest("falsche Angaben");
+				if (date == null) {
+					return badRequest(views.html.mfgAnbieten.render(
+							"Datum darf nicht in der Vergangenheit liegen",
+							userDB));
+				}
 				return badRequest(views.html.mfgAnbieten.render(
 						"Fehler beim Erzeugen von der MFG", userDB));
 			}
@@ -141,28 +135,43 @@ public class Mfg extends Controller {
 				.get().findByEmail(session("email"))));
 
 	}
+
 	@Security.Authenticated(Secured.class)
 	public static Result anfragen(String mfgId) {
 		MFG mfg = DBMFG.get().findById(mfgId);
-		mfg.seats = mfg.seats - 1;
+
+		String mfg_status_id = null;
+		// mfg.seats = mfg.seats - 1;
+
 		User userDB = DBUser.get().findByEmail(session("email"));
 
-		// save thing
-		
-		if(userDB.mf_MFG == null){
-			userDB.mf_MFG = new ArrayList<MFG>();
+
+		// hat der user der anfrage (userDB) schon eine Anfrage auf diese mfg
+		// (mfgId)
+		// liste der mfg_status von der mfg durchgehen und schauen ob userDB._id
+		// == _mfId
+		//bei Ablehnen die mfg_status löschen
+		if (!DBMfg_Status.get().hasUserRequest(userDB, mfgId)) {
+			Mfg_Status mfg_status = new Mfg_Status(userDB._id,Constants.STATUS_ANFRAGE);
+			mfg_status_id = DBMfg_Status.get().create(mfg_status)._id;
 		}
-		userDB.mf_MFG.add(mfg);
+		if (mfg_status_id != null) {
+			if(mfg.mfg_Status_Id == null){
+				mfg.mfg_Status_Id = new ArrayList<String>();
+			}
+			mfg.mfg_Status_Id.add(mfg_status_id);
+		}else{
+			return ok(views.html.mfgAnzeigenAlle.render("Anfrage läuft bereits", userDB, DBMFG.get()
+					.list(), DBMfg_Status.get().list().toArray()));
+		}
 
 		DBMFG.get().save(mfg);
 		DBUser.get().save(userDB);
 		flash("message", "Gespeichert");
 		return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
-				.list()));
-	
+				.list(), DBMfg_Status.get().list().toArray()));
 
 	}
-	
 
 	public static Result save(String id) {
 		// search for thing
@@ -178,16 +187,20 @@ public class Mfg extends Controller {
 
 		// validate form
 		Form<MFG> mfg = Form.form(MFG.class).bindFromRequest();
-		if (mfg.hasErrors()) {
+		Date date = parseDateFromDatepicker(true);
+		if (mfg.hasErrors() || date == null) {
+			if (date == null) {
+				return badRequest(views.html.mfgEdit.render(
+						"Datum darf nicht in der Vergangenheit liegen", userDB,
+						saved, ""));
+			}
 
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-			String date = sdf.format(saved.date);
 			return badRequest(views.html.mfgEdit.render("Fehler in der Form",
-					userDB, saved, date));
+					userDB, saved, ""));
 		} else {
 			// save thing
 			MFG update = mfg.get();
-			Date date = parseDateFromDatepicker();
+
 			saved.date = date;
 			saved.start = update.start;
 			saved.ziel = update.ziel;
@@ -200,7 +213,7 @@ public class Mfg extends Controller {
 		}
 	}
 
-	private static Date parseDateFromDatepicker() {
+	private static Date parseDateFromDatepicker(boolean inFuture) {
 		try {
 			Date date = new Date();
 			Map<String, String[]> parameters = request().body()
@@ -210,9 +223,62 @@ public class Mfg extends Controller {
 			Logger.info("date from js " + parameters.get("datepicker")[0]);
 			String datefromForm = parameters.get("datepicker")[0];
 			date = sdf.parse(datefromForm);
+			if (inFuture) {
+				Date dateNow = new Date();
+				dateNow = sdf.parse(sdf.format(dateNow));
+				Logger.info("date aus form: " + date);
+				Logger.info("date von heute: " + dateNow);
+				if (date.compareTo(dateNow) <= 0) {
+					return null;
+				} else {
+					return date;
+				}
+			}
+
 			return date;
 		} catch (Exception e) {
 			return null;
 		}
 	}
+
+	@Security.Authenticated(Secured.class)
+	public static Result accept(String mfg_statusId) {
+		User userDB = DBUser.get().findByEmail(session("email"));
+		Mfg_Status status = DBMfg_Status.get().findById(mfg_statusId);
+		
+		//über mfg_statusId die mfg finden und seats--
+		MFG mfg = DBMFG.get().getMfgFromMfgStatus(mfg_statusId);
+		mfg.seats--;
+		
+		if(status != null){
+			status.status = Constants.STATUS_ANGENOMMEN;
+			DBMfg_Status.get().save(status);
+			DBMFG.get().save(mfg);
+		}
+		return ok(views.html.index.render("Hello " + session("email"), userDB,
+				DBMFG.get().listToDecide(userDB)));
+
+	}
+
+	@Security.Authenticated(Secured.class)
+	public static Result deny(String mfg_statusId) {
+		
+		//bei Ablehnen die mfg_status löschen
+		User userDB = DBUser.get().findByEmail(session("email"));
+		Mfg_Status status = DBMfg_Status.get().findById(mfg_statusId);
+		
+		//über mfg_statusId die mfg finden und seats--
+		MFG mfg = DBMFG.get().getMfgFromMfgStatus(mfg_statusId);
+		
+		
+		if(status != null){
+			status.status = Constants.STATUS_ABGELEHNT;
+			DBMfg_Status.get().save(status);
+			DBMFG.get().save(mfg);
+		}
+		return ok(views.html.index.render("Hello " + session("email"), userDB,
+				DBMFG.get().listToDecide(userDB)));
+
+	}
+
 }

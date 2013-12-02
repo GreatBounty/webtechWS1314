@@ -52,14 +52,10 @@ public class DBUser extends Finder<User>{
 			return null;
 		}
 	}
-	public User addMFG(User user, MFG mfg){
-		if(!contains(user)){
-			user.mf_MFG.add(mfg);
-			return save(user);
-		}else{
-			return null;
-		}
-	}
+//	public User addMFG(User user,String mfg_id){
+//			user.mf_MFG_id.add(mfg_id);
+//			return save(user);
+//	}
 	
 	/**
 	 * @param skip offset 

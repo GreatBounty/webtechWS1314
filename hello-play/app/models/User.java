@@ -1,6 +1,6 @@
 package models;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 
 import play.data.validation.Constraints.Required;
@@ -18,14 +18,16 @@ public class User extends Entity{
     
     public Date date;
     
-    public ArrayList<MFG> mf_MFG;
+    //public ArrayList<String> mf_MFG;
+//    public HashMap<String, String> mf_MFG_id;
     
     public User(){
     	
     }
     
     public User(String email, String password, String nickname, boolean fahrer, Date date){
-		mf_MFG = new ArrayList<MFG>();
+//		this.mf_MFG_id = new HashMap<String,String>();
+    	this.IsDeleted = false;
     	this.email = email;
     	this.password = password;
     	this.nickname = nickname;
