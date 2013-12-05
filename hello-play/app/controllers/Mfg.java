@@ -215,11 +215,13 @@ public class Mfg extends Controller {
 
 	private static Date parseDateFromDatepicker(boolean inFuture) {
 		try {
-			Date date = new Date();
-			Map<String, String[]> parameters = request().body()
-					.asFormUrlEncoded();
+			Date date = null;
+			Map<String, String[]> parameters = request().body().asFormUrlEncoded();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-			sdf.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+			
+			Logger.info("Default Time Zone: " + TimeZone.getDefault());
+			
+			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
 			Logger.info("date from js " + parameters.get("datepicker")[0]);
 			String datefromForm = parameters.get("datepicker")[0];
 			date = sdf.parse(datefromForm);
@@ -228,7 +230,8 @@ public class Mfg extends Controller {
 				dateNow = sdf.parse(sdf.format(dateNow));
 				Logger.info("date aus form: " + date);
 				Logger.info("date von heute: " + dateNow);
-				if (date.compareTo(dateNow) <= 0) {
+				//if( (dateNow.getTime() + (30*60*1000))-mfgObj.date.getTime() > 0){
+				if( (dateNow.getTime() + (30*60*1000))-date.getTime() > 0){
 					return null;
 				} else {
 					return date;

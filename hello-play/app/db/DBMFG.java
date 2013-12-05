@@ -1,12 +1,9 @@
 package db;
 
-import java.awt.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.TimeZone;
 
 import models.MFG;
@@ -15,7 +12,6 @@ import models.User;
 
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
-import org.mongojack.JacksonDBCollection;
 
 import play.Logger;
 
@@ -65,7 +61,8 @@ public class DBMFG extends Finder<MFG> {
 
 	public DBCursor<MFG> list() {
 		deleteExpired();
-		DBCursor<MFG> mfg = getColl().find().is("IsDeleted", false);
+		DBCursor<MFG> mfg = getColl().find().is("IsDeleted", false);;
+		//.is("IsDeleted", false);
 		return mfg;
 	}
 
@@ -77,14 +74,17 @@ public class DBMFG extends Finder<MFG> {
 		Date dateNow = new Date();
 		try {
 			dateNow = sdf.parse(sdf.format(dateNow));
-
+			
 			for (MFG mfgObj : mfg) {
 				Logger.info("mfgobj: " + mfgObj.date.toString());
-				if (dateNow.compareTo(sdf.parse(sdf.format(mfgObj.date))) >= 0) {
+				
+
+				if( (dateNow.getTime() + (30*60*1000))-mfgObj.date.getTime() > 0){
 					Logger.info("deleted = true");
 					mfgObj.IsDeleted = true;
 					DBMFG.get().save(mfgObj);
 				}
+
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -150,11 +150,14 @@ public class DBMFG extends Finder<MFG> {
 		ArrayList<MFG> listToRemove = new ArrayList<MFG>();
 		if (listOfMfgs != null) {
 			for (MFG mfgObj : listOfMfgs) {
-				if (mfgObj.mfg_Status_Id.size() == 0
-						|| mfgObj.mfg_Status_Id == null) {
-					listToRemove.add(mfgObj);
-					// listOfMfgs.remove(mfgObj);
+				if(mfgObj.mfg_Status_Id != null){
+					if (mfgObj.mfg_Status_Id.size() == 0
+							|| mfgObj.mfg_Status_Id == null) {
+						listToRemove.add(mfgObj);
+						// listOfMfgs.remove(mfgObj);
+					}
 				}
+				
 			}
 		}
 		for (MFG remove : listToRemove) {
