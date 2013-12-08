@@ -2,7 +2,6 @@
 @import tags._
 
 @main("Welcome to Play Framework", user) {
-
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
     
     <div class="well">
@@ -14,6 +13,11 @@
     <div class="row"> 
 	<h2>alle Mitfahrgelegenheiten anzeigen</h2>
 
+	<div>
+			<p>
+				Stadtname:<br><input name="cityname" type="text" class="form-control" id="ajax-city" placeholder="Stadtname">
+			</p>
+	</div>
 	<div class="row">
 		@mfgTableWithStatus(mfg, user, status)
 	</div>
