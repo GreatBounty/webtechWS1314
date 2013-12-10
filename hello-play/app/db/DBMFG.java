@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.TimeZone;
 
 import models.MFG;
@@ -65,6 +66,22 @@ public class DBMFG extends Finder<MFG> {
 		//.is("IsDeleted", false);
 		return mfg;
 	}
+	
+	public  ArrayList<MFG> list(String filter) {
+		DBCursor<MFG> mfg = list();
+		ArrayList<MFG> mfgReturn = new ArrayList<>();
+		String regex = filter + ".*";
+		
+		for(MFG mfgObj : mfg){
+			if(mfgObj.start.matches(".*") || mfgObj.ziel.matches(".*")){
+				mfgReturn.add(mfgObj);
+			}
+		}
+		
+
+		return mfgReturn;
+	}
+	
 
 	private void deleteExpired() {
 		DBCursor<MFG> mfg = getColl().find();
@@ -164,5 +181,9 @@ public class DBMFG extends Finder<MFG> {
 			listOfMfgs.remove(remove);
 		}
 	}
+
+	
+	
+	
 
 }

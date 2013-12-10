@@ -19,8 +19,12 @@ POST	/registrieren				controllers.Registrieren.doRegistrieren()
 GET		/mfgAnbieten				controllers.Mfg.show()
 POST	/mfgAnbieten				controllers.Mfg.showNew()
 
-GET		/mfgAnzeigen				controllers.Mfg.list()
-POST	/mfgAnzeigen				controllers.Mfg.list()
+GET		/mfgAnzeigen				controllers.Mfg.list(filter = "")
+POST	/mfgAnzeigen				controllers.Mfg.list(filter = "")
+
+
+POST	/mfgAnzeigenAjax/:filter	controllers.Mfg.list(filter: String)
+
 
 GET		/mfgEdit/:id				controllers.Mfg.edit(id: String)
 POST	/mfgEdit/:id				controllers.Mfg.edit(id: String)
@@ -31,6 +35,8 @@ GET		/mfgAnzeigenAlle/:id		controllers.Mfg.anfragen(id: String)
 
 GET		/fAccecpt/:mfgId			controllers.Mfg.accept(mfgId: String)
 GET		/fDeny/:mfgId				controllers.Mfg.deny(mfgId: String)
+
+POST	/city/:filter				controllers.City.filterCity(filter: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

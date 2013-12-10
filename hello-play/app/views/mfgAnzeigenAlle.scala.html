@@ -1,4 +1,4 @@
-@(message: String, user : User, mfg : Iterator[MFG], status : List[Mfg_Status])
+@(message: String, user : User, mfg : List[MFG], status : List[Mfg_Status])
 @import tags._
 
 @main("Welcome to Play Framework", user) {
@@ -12,12 +12,12 @@
     </div>
     <div class="row"> 
 	<h2>alle Mitfahrgelegenheiten anzeigen</h2>
-
+	
 	<div>
-			<p>
-				Stadtname:<br><input name="cityname" type="text" class="form-control" id="ajax-city" placeholder="Stadtname">
-			</p>
+		<input id="ajax-city" type="text" ></input>
+		
 	</div>
+	
 	<div class="row">
 		@mfgTableWithStatus(mfg, user, status)
 	</div>

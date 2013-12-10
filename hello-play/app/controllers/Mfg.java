@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import db.Constants;
 import db.DBMFG;
 import db.DBMfg_Status;
@@ -17,6 +19,7 @@ import play.Logger;
 import play.api.mvc.Session;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -48,10 +51,41 @@ public class Mfg extends Controller {
 		} else {
 
 			return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
-					.list(),DBMfg_Status.get().list().toArray()));
+					.list().toArray(),DBMfg_Status.get().list().toArray()));
 		}
 		// return ok(views.html.index.render("Hello from Java"));
 		// return ok(views.index.scala.html("Hello from Java"));
+	}
+	
+	@Security.Authenticated(Secured.class)
+	public static Result list(String filter) {
+		User userDB = DBUser.get().findByEmail(session("email"));
+		
+		if(filter.equals("")){
+			
+			if (userDB.fahrer) {
+				return ok(views.html.mfgAnzeigen.render("", userDB, DBMFG.get()
+						.list(userDB)));
+			} else {
+
+				return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
+						.list().toArray(),DBMfg_Status.get().list().toArray()));
+			}
+		}else{
+			
+			if (userDB.fahrer) {
+				return ok(views.html.mfgAnzeigen.render("", userDB, DBMFG.get()
+						.list(userDB)));
+			} else {
+
+//				return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
+//						.list(filter),DBMfg_Status.get().list().toArray()));
+				JsonNode j = Json.toJson(DBMFG.get().list(filter));
+				Logger.info("json: " + j);
+				return ok(Json.toJson(DBMFG.get().list(filter)));
+			}
+		}
+
 	}
 
 	@Security.Authenticated(Secured.class)
@@ -162,14 +196,14 @@ public class Mfg extends Controller {
 			mfg.mfg_Status_Id.add(mfg_status_id);
 		}else{
 			return ok(views.html.mfgAnzeigenAlle.render("Anfrage läuft bereits", userDB, DBMFG.get()
-					.list(), DBMfg_Status.get().list().toArray()));
+					.list(""), DBMfg_Status.get().list().toArray()));
 		}
 
 		DBMFG.get().save(mfg);
 		DBUser.get().save(userDB);
 		flash("message", "Gespeichert");
 		return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
-				.list(), DBMfg_Status.get().list().toArray()));
+				.list(""), DBMfg_Status.get().list().toArray()));
 
 	}
 

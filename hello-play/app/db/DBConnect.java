@@ -27,6 +27,7 @@ public class DBConnect {
 	public static final String COLLECTION_USERS = "usersLogin";
 	public static final String COLLECTION_MFG = "mfg";
 	public static final String COLLECTION_MFG_STATUS = "mfg_status";
+	public static final String COLLECTION_CITY = "city";
 	
 	private static MongoClient mongo;
 	private static DB db;

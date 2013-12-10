@@ -1,29 +1,30 @@
 $( document ).ready(function() {
-    $("#ajax-city").change(function() {
-     	var filter = $("#ajax-city").val();
-     	alert(filter);
-		$.ajax({
-			url: "",
-		  	type: 'POST',
-		  	async: true,
-		  	data: { Filter: filter },
-		  	success: function(response){
-		  		$('#mfg_table').empty();
-		  		
-				/*$.each(response.responseText, function(){
-					var button = $('<button/>',{
-					    text: 'Div text',
-					    'class': 'className'
-					}).appendTo('#Id von der liste');
-					
-					var a = $('<a/>',{
 
-					}).appendTo(button);
-				});*/
-			},
-			error: function(){
-				alert('error');
-			}
-		});
+	var minlength = 1;
+    $("#ajax-city").keyup(function() {
+    	
+    	var that = this,
+    	value = $(this).val();
+    	
+    	if(value.length >= minlength){
+    
+	     	var filter = $("#ajax-city").val();
+	     	//alert(filter);
+			$.ajax({
+				url: "city/"+filter,
+			  	type: 'POST',
+			  	async: true,
+			  	dataType: 'json',
+			  	data: { Filter: filter },
+			  	success: function(response){
+			  		//alert('test');
+			  		//$('#mfg_table').empty();
+			  		
+				},
+				error: function(){
+					alert('error');
+				}
+			});
+		}
 	});
 });

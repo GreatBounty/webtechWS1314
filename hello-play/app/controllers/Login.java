@@ -1,13 +1,10 @@
 package controllers;
 
 import db.DBMFG;
-import db.DBMfg_Status;
 import db.DBUser;
 import models.LoginTest;
 import models.User;
-import models.ValidUser;
 import play.Logger;
-import play.api.mvc.Session;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -34,6 +31,7 @@ public class Login extends Controller {
 		else{
 			return badRequest("fuck");
 		}
+		
 	}
 	
 	public static Result login3(){

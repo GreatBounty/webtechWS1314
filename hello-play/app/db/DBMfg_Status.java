@@ -71,6 +71,8 @@ public class DBMfg_Status extends Finder<Mfg_Status> {
 
 		return mfg;
 	}
+
+	
 	
 
 }
