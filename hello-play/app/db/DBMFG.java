@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.TimeZone;
 
+import models.City;
 import models.MFG;
 import models.Mfg_Status;
 import models.User;
@@ -62,7 +63,7 @@ public class DBMFG extends Finder<MFG> {
 
 	public DBCursor<MFG> list() {
 		deleteExpired();
-		DBCursor<MFG> mfg = getColl().find().is("IsDeleted", false);;
+		DBCursor<MFG> mfg = getColl().find(DBQuery.is("IsDeleted", false).greaterThan("seats", 0));		
 		//.is("IsDeleted", false);
 		return mfg;
 	}
@@ -70,10 +71,10 @@ public class DBMFG extends Finder<MFG> {
 	public  ArrayList<MFG> list(String filter) {
 		DBCursor<MFG> mfg = list();
 		ArrayList<MFG> mfgReturn = new ArrayList<>();
-		String regex = filter + ".*";
+		
 		
 		for(MFG mfgObj : mfg){
-			if(mfgObj.start.matches(".*") || mfgObj.ziel.matches(".*")){
+			if(mfgObj.start.toLowerCase().startsWith(filter.toLowerCase()) || mfgObj.ziel.toLowerCase().startsWith(filter.toLowerCase())){
 				mfgReturn.add(mfgObj);
 			}
 		}
@@ -180,6 +181,10 @@ public class DBMFG extends Finder<MFG> {
 		for (MFG remove : listToRemove) {
 			listOfMfgs.remove(remove);
 		}
+	}
+
+	public ArrayList<double[]> getMapCoor(String id) {
+		return (ArrayList<double[]>)get().findById(id).lonLat;
 	}
 
 	

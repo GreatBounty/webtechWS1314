@@ -13,13 +13,28 @@
     <div class="row"> 
 	<h2>alle Mitfahrgelegenheiten anzeigen</h2>
 	
-	<div>
-		<input id="ajax-city" type="text" ></input>
-		
-	</div>
+	<form class="form-horizontal" role="form" method="POST" action="/mfgAnzeigen">
+	<table>
+		<tr>
+			<td>
+				<input id="ajax-city" type="text" name="filter" value=""></input>	
+			</td>
+			
+		</tr>
+		<tr>
+			<td/>
+			<td id="city"/>
+		</tr>
+	</table>
+	</form>
 	
 	<div class="row">
 		@mfgTableWithStatus(mfg, user, status)
+		<div class="form-group" >
+		  <div style="width:60%; height:60%">
+			<div class="col-lg-10" id="map-canvas" style="width:100%; height:100%"></div> 
+			</div>
+		</div>
 	</div>
 		
 </div>

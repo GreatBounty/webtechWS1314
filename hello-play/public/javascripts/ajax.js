@@ -5,7 +5,7 @@ $( document ).ready(function() {
     	
     	var that = this,
     	value = $(this).val();
-    	
+    	$("#city").empty();
     	if(value.length >= minlength){
     
 	     	var filter = $("#ajax-city").val();
@@ -18,8 +18,22 @@ $( document ).ready(function() {
 			  	data: { Filter: filter },
 			  	success: function(response){
 			  		//alert('test');
-			  		//$('#mfg_table').empty();
+			  		//response liefert alle städte
+			  		var counter = 0;
 			  		
+			  		var listStart = $('<ul/>',{
+					}).appendTo('#city');
+		  			
+			  		$(jQuery.parseJSON(JSON.stringify(response))).each(function() {  
+			  		if(counter < 5){
+			  			//alert(this.name);
+			  			
+			  			var thead = $('<li/>',{
+						    text: this.name
+						}).appendTo(listStart);
+			  		}
+			  		counter++;
+			  		});
 				},
 				error: function(){
 					alert('error');
@@ -28,3 +42,4 @@ $( document ).ready(function() {
 		}
 	});
 });
+

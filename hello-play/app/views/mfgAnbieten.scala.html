@@ -1,9 +1,9 @@
 @(message: String, user : User)
-
-
 @main("Welcome to Play Framework", user) {
 
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
+    
+    
     
     <div class="well">
         <h1>@message</h1>
@@ -17,6 +17,9 @@
 	 <div class="row">
 
 		<form class="form-horizontal" role="form" method="POST" action="/mfgAnbieten">
+		
+		
+		
 		  <div class="form-group">
 		    <label for="inputStart" class="col-lg-2 control-label">Start</label>
 		    <div class="col-lg-10">
@@ -25,19 +28,30 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="inputZiel" class="col-lg-2 control-label">Ziel</label>
+		  <label for="inputZiel" class="col-lg-2 control-label">Ziel</label>
 		    <div class="col-lg-10">
 		      <input name="ziel" type="text" class="form-control" id="inputZiel" placeholder="Ziel">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="inputStrecke" class="col-lg-2 control-label">Strecke</label>
-		    <div class="col-lg-10">
-		      <input name="strecke" type="text" class="form-control" id="inputStrecke" placeholder="Strecke">
-		    </div>
-		  </div>
-		  
+		  <label class="col-lg-2 control-label">Strecke</label>
+		  	<div class="col-lg-10">
+			  	<select class="strecken" name="strecke">
+				  <option selected="selected" value="s1">Strecke 1</option>
+				  <option value="s2">Strecke 2</option>
+				  <option value="s3">Strecke 3</option>
+				  <option value="s4">Strecke 4</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group" >
+		  <div style="width:60%; height:60%">
+			<div class="col-lg-10" id="map-canvas" style="width:100%; height:100%"></div> 
+			</div>
+		</div>
+		   
 		  <div class="form-group">
 		    <label for="inputSeats" class="col-lg-2 control-label">freie Plätze</label>
 		    <div class="col-lg-10">
@@ -55,6 +69,7 @@
 	      		</div>
 	      </div>
 
+	      
 	      
 		  <div class="form-group">
 		    <div class="col-lg-offset-2 col-lg-10">

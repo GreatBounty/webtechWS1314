@@ -247,6 +247,7 @@ GRM        Grimma
 GRS        Gransee
 GRZ        Greiz
 GS         Goslar
+KN		   Gottmadingen
 GT         Gütersloh
 GTH        Gotha
 GUB        Guben
@@ -646,6 +647,7 @@ SM         Schmalkalden-Meiningen (Meiningen)
 SMÜ        Schwabmünchen
 SN         Schwerin
 SNH        Sinsheim [Elsenz]
+KN		   Singen
 SO         Soest
 SOB        Schrobenhausen
 SOG        Schongau

@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import db.Constants;
 import play.data.validation.Constraints.*;
@@ -18,6 +19,8 @@ public class MFG extends Entity{
     //public boolean remember;
 	@Required
     public String strecke;
+	
+	public List<double[]> lonLat;
 	
     public Date date;
 	@Required
@@ -38,6 +41,7 @@ public class MFG extends Entity{
 	}
 	
     public MFG(String start, String ziel, String strecke, int seats, Date date, String userId){
+    	lonLat = new ArrayList<>();
     	this.mfg_Status_Id = null;
     	this.IsDeleted = false;
     	this._userId = userId;
@@ -48,4 +52,7 @@ public class MFG extends Entity{
     	this.date = date;
     }
 
+    public void specifyLocation(double longitude, double latitude){
+		this.lonLat.add(new double[]{longitude, latitude});
+	}
 }

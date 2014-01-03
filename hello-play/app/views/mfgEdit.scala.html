@@ -35,12 +35,24 @@
 		    </div>
 		  </div>
 		  
+		 
 		  <div class="form-group">
-		    <label for="inputStrecke" class="col-lg-2 control-label">Strecke</label>
-		    <div class="col-lg-10">
-		      <input name="strecke" type="text" class="form-control" id="inputStrecke" value='@mfg.strecke'>
-		    </div>
-		  </div>
+		  <label class="col-lg-2 control-label">Strecke</label>
+		  	<div class="col-lg-10">
+			  	<select class="strecken" name="strecke">
+				  <option selected="selected" value="s1">Strecke 1</option>
+				  <option value="s2">Strecke 2</option>
+				  <option value="s3">Strecke 3</option>
+				  <option value="s4">Strecke 4</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group" >
+		  <div style="width:60%; height:60%">
+			<div class="col-lg-10" id="map-canvas" style="width:100%; height:100%"></div> 
+			</div>
+		</div>
 		  
 		  <div class="form-group">
 		    <label for="inputSeats" class="col-lg-2 control-label">freie Plätze</label>
