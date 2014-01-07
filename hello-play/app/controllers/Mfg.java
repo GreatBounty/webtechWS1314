@@ -121,7 +121,7 @@ public class Mfg extends Controller {
 				MFG mfgSaved = new MFG(mfg.start, mfg.ziel, mfg.strecke, mfg.seats,
 						date, FK_idUser);
 				
-				setPositions(form, mfgSaved);
+				//setPositions(form, mfgSaved);
 				
 				newMFG = DBMFG.get().create(mfgSaved);
 			}
