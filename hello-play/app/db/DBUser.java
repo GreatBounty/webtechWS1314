@@ -120,6 +120,21 @@ public class DBUser extends Finder<User>{
 		return null;
 	}
 	
+	
+	public User validateUser(String email){
+		
+//		UserDB users = UserDB.get();
+//		for(User u : users.collectionName("")){
+//			
+//		}
+		DBCursor<User> Users = getColl().find();
+		for(User user : Users){
+			if(user.email.equals(email)){
+				return user;
+			}
+		}
+		return null;
+	}
 }
 
 

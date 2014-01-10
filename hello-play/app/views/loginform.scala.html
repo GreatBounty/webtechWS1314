@@ -20,6 +20,9 @@
     <div class="row">
 
 			<form class="form-horizontal" role="form" method="POST" action="/login">
+			
+			<input type="hidden" id="fbEmail" name="fbEmail" value="">
+			<input type="hidden" id="fbUsername" name="fbUsername" value="">
 			  <div class="form-group">
 			    <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
 			    <div class="col-lg-10">
@@ -61,9 +64,5 @@
   </div>
 	  
 	
-	<!--
-	  Below we include the Login Button social plugin. This button uses the JavaScript SDK to
-	  present a graphical Login button that triggers the FB.login() function when clicked. -->
 	
-	<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
 }
