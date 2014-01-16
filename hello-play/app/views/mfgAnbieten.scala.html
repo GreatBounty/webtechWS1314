@@ -1,81 +1,79 @@
 @(message: String, user : User)
-@main("Welcome to Play Framework", user) {
+@main("nimm mich...mit!", user) {
 
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
     
     
-    
-    <div class="well">
+    <div class="full-width-features feature-2">
         <h1>@message</h1>
+        <h2>User: @user.nickname <br>E_Mail: (@user.email)</h2>
     </div>
-    <div class="userDetails">
-    <dt>@user.nickname <span>(@user.email)</span></dt>
-    </div>
-    <div class="row"> 
-	<h2>Neue Mitfahrgelegenheit anbieten</h2>
+    <br>
+    
+    
+    <a href="#feature-set" class="down-tab"
+			name="feature-set"> MFG anbieten <i
+			class="arrow arrow-down">&nbsp;</i>
+	</a>
+		
+    <div class="full-width-features feature-1"> 
+    <h1>Neue</h1>
+	<h2>Mitfahrgelegenheit anbieten</h2>
 	
-	 <div class="row">
+	 <div class="space mfg_anzeigen">
 
 		<form class="form-horizontal" role="form" method="POST" action="/mfgAnbieten">
 		
-		
-		
-		  <div class="form-group">
-		    <label for="inputStart" class="col-lg-2 control-label">Start</label>
-		    <div class="col-lg-10">
-		      <input name="start" type="text" class="form-control" id="inputStart" placeholder="Start">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		  <label for="inputZiel" class="col-lg-2 control-label">Ziel</label>
-		    <div class="col-lg-10">
-		      <input name="ziel" type="text" class="form-control" id="inputZiel" placeholder="Ziel">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		  <label class="col-lg-2 control-label">Strecke</label>
-		  	<div class="col-lg-10">
-			  	<select class="strecken" name="strecke">
-				  <option selected="selected" value="s1">Strecke 1</option>
-				  <option value="s2">Strecke 2</option>
-				  <option value="s3">Strecke 3</option>
-				  <option value="s4">Strecke 4</option>
-				</select>
-			</div>
-		</div>
-		
-		<div class="form-group" >
-		  <div style="width:60%; height:60%">
-			<div class="col-lg-10" id="map-canvas" style="width:100%; height:100%"></div> 
-			</div>
-		</div>
-		   
-		  <div class="form-group">
-		    <label for="inputSeats" class="col-lg-2 control-label">freie Plätze</label>
-		    <div class="col-lg-10">
-		      <input style="height: 30px !important;" name="seats" type="number" class="form-control" id="inputSeats" placeholder="seats">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group" id="date_from_group">
-		  	<label for="datetimepicker" class="col-lg-2 control-label">Datum</label>
-		  		<div id="datetimepicker" class="input-append date">
-		  			<input style="height: 30px !important;" name="datepicker" type="text"></input>
-		  			<span style="height: 30px !important;" class="add-on">
+		<table class="table">
+			<tr>
+				<td for="inputStart">Start</td>
+				<td><input name="start" type="text" class="span4 height" id="inputStart" placeholder="Start"></td>
+			</tr>
+			<tr>
+				<td for="inputZiel">Ziel</td>
+				<td><input name="ziel" type="text" class="span4 height" id="inputZiel" placeholder="Ziel"></td>
+			</tr>
+			<tr>
+				<td for="inputSeats"></td>
+				<td><input name="seats" type="number" class="span4 height" id="inputSeats" placeholder="seats"></td>
+			</tr>
+			<tr>
+				<td for="datetimepicker">Datum</td>
+				<td>
+					<div id="datetimepicker" class="input-append date ">
+		  			<input class="span4 height" name="datepicker" type="text"></input>
+		  			<span  class="add-on height">
 	      			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 	      			</span>
 	      		</div>
-	      </div>
-
-	      
-	      
-		  <div class="form-group">
-		    <div class="col-lg-offset-2 col-lg-10">
-		      <button type="submit" class="btn btn-default">Mitfahrgelegenheit anbieten!</button>
-		    </div>
-		  </div>
+				</td>
+			</tr>
+			<tr>
+				<td>Strecke</td>
+				<td>
+					<select class="strecken height span4" name="strecke">
+					  <option selected="selected" value="s1">Strecke 1</option>
+					  <option value="s2">Strecke 2</option>
+					  <option value="s3">Strecke 3</option>
+					  <option value="s4">Strecke 4</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+				<button type="submit" class="regis_btn btn btn-default">Mitfahrgelegenheit anbieten!</button>
+			</td>
+			</tr>
+			
+		</table>
+		  
+		<div class="map" id="map-canvas" style="width:100%; height:100%"></div> 
+	
+		
 		  
 		</form>
 		

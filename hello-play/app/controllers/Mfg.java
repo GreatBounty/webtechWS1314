@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import db.Constants;
 import db.DBCity;
 import db.DBMFG;
@@ -61,12 +63,15 @@ public class Mfg extends Controller {
 
 			return ok(views.html.mfgAnzeigenAlle.render("", userDB, DBMFG.get()
 					.list().toArray(), DBMfg_Status.get().list().toArray()));
+		
+			 //return 	ok(Json.toJson(DBMFG.get().list()));
+			// 			Ok(Json.toJson(Message("Backbone Hello World")))
 		}
 		// return ok(views.html.index.render("Hello from Java"));
 		// return ok(views.index.scala.html("Hello from Java"));
-		// JsonNode j = Json.toJson(DBMFG.get().list(filter));
+		 //JsonNode j = Json.toJson(DBMFG.get().list());
 		// Logger.info("json: " + j);
-		// return ok(Json.toJson(DBMFG.get().list(filter)));
+		
 	}
 
 	@Security.Authenticated(Secured.class)

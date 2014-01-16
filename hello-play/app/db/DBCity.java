@@ -1,6 +1,7 @@
 package db;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import models.City;
 import models.Mfg_Status;
@@ -11,6 +12,7 @@ import org.mongojack.JacksonDBCollection;
 
 import play.Logger;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 
 public class DBCity extends Finder<City> {
@@ -44,18 +46,41 @@ public class DBCity extends Finder<City> {
 		return save(city);
 	}
 
+	/*
+	 * public ArrayList<User> findByName(String filter) { //DBCursor<User> users
+	 * = getColl().find(); ArrayList<User> filterUsers = new ArrayList<>(); int
+	 * maxRows = 10; int i = 0; Pattern pFilter = Pattern.compile("^"+filter,
+	 * Pattern.CASE_INSENSITIVE); BasicDBObject query = new
+	 * BasicDBObject("email", pFilter); DBCursor<User> Users =
+	 * getColl().find(query);
+	 * 
+	 * for (User user : Users){ if(i > maxRows){ return filterUsers; }
+	 * //Logger.info("ci: " + ci.name + "\tfilter: " + filter);
+	 * 
+	 * 
+	 * Logger.info("gefiltert: " + user.email); filterUsers.add(user); i++; // }
+	 * }
+	 * 
+	 * return filterUsers; }
+	 */
+
 	public ArrayList<City> findByName(String filter) {
-		DBCursor<City> city = getColl().find();
 		ArrayList<City> filterCities = new ArrayList<>();
-		
-		for (City ci : city){
-			//Logger.info("ci: " + ci.name + "\tfilter: " + filter);
-			if(ci.name.toLowerCase().startsWith(filter.toLowerCase())){
-				Logger.info("gefiltert: " + ci.name);
-				filterCities.add(ci);
+		int maxRows = 10;
+		int i = 0;
+		Pattern pFilter = Pattern.compile("^" + filter,
+				Pattern.CASE_INSENSITIVE);
+		BasicDBObject query = new BasicDBObject("name", pFilter);
+		DBCursor<City> city = getColl().find(query);
+		// if(city.name.toLowerCase().startsWith(filter.toLowerCase())){
+		for (City ci : city) {
+			if (i > maxRows) {
+				return filterCities;
 			}
+			Logger.info("gefiltert: " + ci.name);
+			filterCities.add(ci);
+			i++;
 		}
-		
 		return filterCities;
 	}
 
@@ -64,8 +89,5 @@ public class DBCity extends Finder<City> {
 
 		return city;
 	}
-
-	
-	
 
 }

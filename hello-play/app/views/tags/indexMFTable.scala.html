@@ -1,11 +1,11 @@
 @(items: List[MFG], user : User)
-<table class="table table-striped">
+<table class="table">
 <thead>
   <tr>
     <th>Start</th>
     <th>Ziel</th>
     <th>Strecke</th>
-    <th>Plätze</th>
+    <th>Plaetze</th>
     <th>Wann</th>
   </tr>
 </thead>
@@ -26,8 +26,6 @@
 					@for(mfg <- i.mfg_Status_Id){
 						
 						
-								
-								<tr>
 								<td>Annehmen/Ablehnen: </td>
 								<td/><td/>
 								<td>
@@ -41,10 +39,8 @@
 									</div>
 								</td>
 								
-								
-							
-								<tr/>
-							
+							<tr>
+							</tr>
 						
 					}
 				}

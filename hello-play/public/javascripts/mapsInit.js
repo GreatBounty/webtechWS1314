@@ -12,9 +12,7 @@ function s1(map, position1, position2){
 	Beispiel: route berechnen - mit optionalen waypoints wird die Route Ã¼ber die angegebenen Stationen berechnet
 	*/
 	
-	  //var start = new google.maps.LatLng(47.67, 9.17); //document.getElementById("start").value;
-	  //var end = new google.maps.LatLng(47.6745, 9.1708); //document.getElementById("end").value;
-	  var request = {
+	 	var request = {
 	    origin:position1,
 	    destination:position2,
 	    
@@ -44,4 +42,4 @@ function s1(map, position1, position2){
 		s1(map,position1,position2 );
 		
 	}
-	google.maps.event.addDomListener(window, 'load', initialize);
+	google.maps.event.addDomListener(window, 'load', initialize());

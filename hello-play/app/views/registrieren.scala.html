@@ -1,82 +1,82 @@
 @(badrequest: String)
 
-@main("Welcome to Play Framework", null) {
+@main("nimm mich...mit!", null) {
 
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
 
     <div class="container">
 
-    <div class="starter-template">
-      <h1>Registrieren</h1>
-      
-      	<p>@badrequest</p>
+   
+    <div class="full-width-features feature-2">
+        <h1>Registrieren</h1>
+        <h2>@badrequest</h2>
     </div>
+    <br>
     
+	  <a href="#feature-set" class="down-tab"
+			name="feature-set"> Registrieren <i
+			class="arrow arrow-down">&nbsp;</i>
+	</a>
+    
+	<div class="full-width-features feature-1">
+		<div class="regis">
+			<div class="row">
+				<div class="span12">
+					<h1>Registration</h1>
+					<h2>Bitte registrieren Sie sich!</h2>
+				</div>
+			</div>
 
-    <div class="row">
+			<div class="center_regis">
+				<form role="form" method="POST" action="/registrieren">
 
-			<form class="form-horizontal" role="form" method="POST" action="/registrieren">
-			  <div class="form-group">
-			    <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
-			    <div class="col-lg-10">
-			      <input name="email" type="email" class="form-control" id="inputEmail1" placeholder="Email">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="inputPassword1" class="col-lg-2 control-label">Password</label>
-			    <div class="col-lg-10">
-			      <input name="password" type="password" class="form-control" id="inputPassword1" placeholder="Password">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="inputPassword1" class="col-lg-2 control-label">Password bestätigen</label>
-			    <div class="col-lg-10">
-			      <input name="password2" type="password" class="form-control" id="inputPassword2" placeholder="Password">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="inputnickname" class="col-lg-2 control-label">Nickname</label>
-			    <div class="col-lg-10">
-			      <input name="nickname" type="text" class="form-control" id="inputnickname">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <div class="col-lg-offset-2 col-lg-10">
-			      <div class="checkbox">
-			        <label>
-			          <input onchange="checkChanged()" name="fahrer" type="checkbox" id="fahrer">Fahrer
-			        </label>
-			      </div>
-			    </div>
-			  </div>
-			  
-			  
-			  
-			  <div class="form-group" id="date_from_group" style="display:none;">
-			  	<label for="datetimepicker" class="col-lg-2 control-label">Geburtstag</label>
-			  	
-			  		<div id="datetimepicker" class="input-append date">
-			  			<input style="height: 30px !important;" name="datepicker" type="text"></input>
-			  			<span style="height: 30px !important;" class="add-on">
-		      			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-		      			</span>
-		      		</div>
-		      	
-		      </div>
-		
-		    
-		    
-			  <div class="form-group">
-			    <div class="col-lg-offset-2 col-lg-10">
-			      <button type="submit" class="btn btn-default">Registrate</button>
-			    </div>
-			  </div>
-			</form>
-    </div>
+					<table class="table">
+						<tr>
+							<td for="inputEmail1" class="">E-Mail</td>
+							<td><input name="email" type="email" class="span4 height"
+								id="inputEmail1" placeholder="Email"></td>
+							<td for="inputnickname" class="">Nickname</td>
+							<td><input name="nickname" type="text" class=" span4 height"
+								id="inputnickname"></td>
+						</tr>
+						<tr>
+							<td for="inputPassword1" class="">Passwort</td>
+							<td><input name="password" type="password"
+								class="span4 height" id="inputPassword1" placeholder="Password"></td>
+							
+							<td for="datetimepicker" class="">Geburtstag</td>
+							<td id="datetimepicker"><input class=" span4 height"
+								name="datepicker" type="text"></input>
+								<span class="add-on height"> <i
+									data-time-icon="icon-time" data-date-icon="icon-calendar"></i></td>
+
+						</tr>
+						<tr>
+							<td for="inputPassword1" class="">Passwort wiederholen</td>
+							<td><input name="password2" type="password"
+								class=" span4 height" id="inputPassword2" placeholder="Password"></td>
+							<div class="form-group" id="date_from_group"
+								style="display: none;">
+								<div class="checkbox">
+									<td class="">Fahrer</td>
+									<td><input onchange="checkChanged()" name="fahrer"
+										type="checkbox" id="fahrer"></td>
+								</div>
+							</div>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+									<input type="submit" class="btn btn-small regis_btn" value="Registrieren" />
+							</td>
+						<tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
 	
   </div>
   

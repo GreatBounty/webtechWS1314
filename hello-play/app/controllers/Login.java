@@ -27,7 +27,7 @@ public class Login extends Controller {
 		if (LoginTest.logintest(eMail, password)) {
 			return ok("Email: " + eMail + "Password: " + password);
 		} else {
-			return badRequest("fuck");
+			return badRequest("");
 		}
 
 	}

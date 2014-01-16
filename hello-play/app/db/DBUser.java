@@ -7,6 +7,7 @@ import org.mongojack.DBCursor;
 
 import play.Logger;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 
 
@@ -78,15 +79,25 @@ public class DBUser extends Finder<User>{
 	}
 	
 	public User findByEmail(String email){
-		DBCursor<User> Users = getColl().find();
-		
-		for(User userDB : Users){
-			if(email.equals(userDB.email)){
-				return userDB;
-			}
+		BasicDBObject query = new BasicDBObject("email", email);
+		User Users = getColl().findOne(query);
+		if(Users != null){
+			return Users;
+		}else{
+			return null;
 		}
-		return null;
 	}
+	
+//	public User findByEmail(String email){
+//		DBCursor<User> Users = getColl().find();
+//		
+//		for(User userDB : Users){
+//			if(email.equals(userDB.email)){
+//				return userDB;
+//			}
+//		}
+//		return null;
+//	}
 	
 	public String getIdFromUser(User user){
 		DBCursor<User> Users = getColl().find();

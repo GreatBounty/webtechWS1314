@@ -20,7 +20,7 @@ $( document ).ready(function() {
 			  		//alert('test');
 			  		//response liefert alle städte
 			  		var counter = 0;
-			  		
+			  		//????
 			  		var listStart = $('<ul/>',{
 					}).appendTo('#city');
 		  			
